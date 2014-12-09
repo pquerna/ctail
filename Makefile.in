@@ -1,0 +1,58 @@
+
+srcdir=@srcdir@
+bindir=@bindir@
+VPATH=@srcdir@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+CTAIL_MAJOR_VERSION=@CTAIL_MAJOR_VERSION@
+CTAIL_DOTTED_VERSION=@CTAIL_DOTTED_VERSION@
+
+PROGRAMS=ctail
+
+HEADERS_DEP=
+
+LIBTOOL=@APR_LIBTOOL@ --silent
+MKDIR = @mkdir_p@
+INSTALL = @INSTALL@
+CC=@CC@
+CFLAGS=@CFLAGS@
+CPPFLAGS=@CPPFLAGS@
+INCLUDES=-I$(srcdir) \
+         @APR_INCLUDES@ \
+         @APU_INCLUDES@ \
+         $(EXTRA_INCLUDES)
+
+LDFLAGS=@LDFLAGS@
+LIBS=@CTAIL_LIBS@
+
+all: $(PROGRAMS)
+
+ctail.lo: ctail.c ${HEADERS_DEP} 
+
+ctail: ctail.lo
+	$(LIBTOOL) --mode=link $(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+
+clean:
+	@rm -rf $(PROGRAMS)
+	@rm -rf ctail.lo
+	@rm -rf ctail.o
+
+distclean: clean
+	@rm -rf Makefile
+	@rm -rf config.log
+	@rm -rf config.status
+	@rm -rf .libs
+
+install: $(PROGRAMS)
+	$(MKDIR) $(DESTDIR)$(bindir)
+	$(LIBTOOL) --mode=install $(INSTALL) -m 755 ctail $(DESTDIR)$(bindir)
+
+.SUFFIXES:
+.SUFFIXES: .c .lo .o
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDES) -c -o $@ $< && touch $@

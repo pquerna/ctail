@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Copyright 2005 Justin Erenkrantz and Greg Stein
+# Copyright 2005 The Apache Software Foundation or its licensors, as
+# applicable.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+# buildconf: Build the support scripts needed to compile from a
+#            checked-out version of the source code.
+
+libtoolize=`build/PrintPath glibtoolize libtoolize15 libtoolize14 libtoolize`
+if [ "x$libtoolize" = "x" ]; then
+    echo "libtoolize not found in path"
+    exit 1
+fi
+
+$libtoolize --copy --automake --force
+
+rm -f aclocal.m4
+aclocal -I build/m4/
+
+echo generating configure
+${AUTOCONF:-autoconf}
+
+# Remove autoconf 2.5x's cache directory
+rm -rf autom4te*.cache

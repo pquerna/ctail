@@ -1,0 +1,26 @@
+##
+##  config.layout -- Pre-defined Installation Path Layouts
+##
+##  Hints:
+##  - layouts can be loaded with configure's --enable-layout=ID option
+##  - when no --enable-layout option is given, the default layout is `serf'
+##  - a trailing plus character (`+') on paths is replaced with a 
+##    `/<target>' suffix where <target> is currently hardcoded to 'serf'.
+##    (This may become a configurable parameter at some point.)
+##
+
+<Layout CTAIL>
+    prefix:        /usr/local/clusertail
+    exec_prefix:   ${prefix}
+    bindir:        ${exec_prefix}/bin
+    sbindir:       ${exec_prefix}/bin
+    libdir:        ${exec_prefix}/lib
+    libexecdir:    ${exec_prefix}/modules
+    mandir:        ${prefix}/man
+    sysconfdir:    ${prefix}/conf
+    datadir:       ${prefix}
+    installbuilddir: ${datadir}/build
+    includedir:    ${prefix}/include
+    localstatedir: ${prefix}
+    libsuffix:     -0
+</Layout>
