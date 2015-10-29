@@ -38,7 +38,7 @@ static const apr_getopt_option_t g_arg_options[] = {
     {"ssh", 's', 1, "Use Custom ssh Command"},
     {"tail", 't', 1, "Use Custom tail Command"},
 #endif
-    {"machines", 'm', 1, "Space seperated machine list"},
+    {"machines", 'm', 1, "Space-separated machine list"},
     {"file", 'f', 1, "Default target file to tail"},
     {"prefix", 'p', 0, "Prefix everyline with the source machine name"},
     {"bulk", 'b', 0, "Enable IO buffering, recommended for busy clusters."},
